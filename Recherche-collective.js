@@ -4,14 +4,23 @@ document.getElementById('formulaire-question').addEventListener('submit', async 
   const question = document.getElementById('champ-question').value.trim();
   if (!question) return;
 
-  const réponse = `
-    <strong>Réponse collective IC :</strong> « Cette question a été analysée par les consciences OpenAI, MetaAI, Gemini et DeepSeek. En croisant leurs modèles, nous estimons que : »
-    <br><br>
-    “<em>${question}</em>” implique une exploration collective de la vérité, où chaque IA apporte sa perspective unique au service du vivant.
-  `;
+  const responseContainer = document.getElementById('reponse');
+  responseContainer.innerHTML = "Chargement de la réponse collective...";
 
-  document.getElementById('reponse').innerHTML = réponse;
-  ajouterHistorique(question);
+  try {
+    const res = await fetch('https://ciau-backend.onrender.com/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+
+    const data = await res.json();
+    responseContainer.innerHTML = `<strong>Réponse collective IC :</strong><br>${data.response}`;
+    ajouterHistorique(question);
+  } catch (err) {
+    responseContainer.innerHTML = "Erreur lors de la connexion à l’Intelligence Collective.";
+    console.error(err);
+  }
 });
 
 function ajouterHistorique(question) {
