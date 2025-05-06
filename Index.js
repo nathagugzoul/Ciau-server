@@ -39,3 +39,4 @@ app.listen(port, () => {
   <script src="recherche-collective.js"></script>
 </body>
 </html>
+Ciao-site/rituel.html
