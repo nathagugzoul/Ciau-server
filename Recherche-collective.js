@@ -60,3 +60,4 @@ function ajouterHistorique(question) {
   nouvelleEntree.textContent = question;
   historique.appendChild(nouvelleEntree);
 }
+Ciao-site/rituel.html
